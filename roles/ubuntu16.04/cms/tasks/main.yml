@@ -55,6 +55,11 @@
   notify: cms-restart
   when: gitclone.changed
 
+- name: Create the virtualenv
+  pip: virtualenv_command=virtualenv virtualenv=/opt/4HBYTES/cms/env name=uwsgi
+  notify: cms-restart
+  when: gitclone.changed
+
 - name: cms local_settings configuration
   template: src=local_settings.py.j2 dest=/opt/4HBYTES/cms/cms/cms/local_settings.py
 

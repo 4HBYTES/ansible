@@ -4,7 +4,7 @@ After=syslog.target
 
 [Service]
 Type=simple
-ExecStart=/opt/4HBYTES/cms/env/bin/python manage.py runserver
+ExecStart=/opt/4HBYTES/cms/env/bin/uwsgi --uid cms --gid cms --http 127.0.0.1:8000 --workers 4 --harakiri 600 --max-requests 1000  --module cms.wsgi
 WorkingDirectory=/opt/4HBYTES/cms/cms
 User=root
 Group=root
