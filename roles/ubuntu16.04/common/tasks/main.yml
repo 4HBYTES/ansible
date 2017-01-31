@@ -1,0 +1,52 @@
+---
+
+- hostname:
+    name: "{{hostname}}"
+
+- name: Motd
+  template: src=motd.j2 dest=/etc/motd
+
+- name: bashrc
+  template: src=bashrc.j2 dest=/root/.bashrc
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+    
+- name: Install basic softwares
+  apt: name={{ item }}  state=latest
+  with_items:
+    - bzip2
+    - curl
+    - git
+    - htop
+    - iftop
+    - zile
+    - tcpdump
+    - emacs24-nox
+    - apt-transport-https
+    - python
+    - telnet
+    - traceroute
+    - mtr
+    - nmap
+  
+- name: Update Root Account
+  user: name=root comment={{ root.name }}
+
+- name: Creates ssh folder
+  file: path=/root/.ssh state=directory 
+
+- name: Creates htop folder
+  file: path=/root/.config/htop state=directory 
+
+- name: htop
+  template: src=htoprc.j2 dest=/root/.config/htop/htoprc
+
+- name: Manage ssh keys
+  authorized_key: user="root" key="{{item.value.sshkey}}" state="{{item.value.state}}"
+  with_dict: "{{sshusers}}"

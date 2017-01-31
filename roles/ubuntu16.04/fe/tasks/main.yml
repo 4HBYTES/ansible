@@ -1,0 +1,28 @@
+---
+
+- name: Create directory
+  file: path=/opt/4HBYTES state=directory
+
+- name: Install virtualenv
+  pip: name=virtualenv
+  
+- name: Clone fe
+  git:
+    repo: https://github.com/4HBYTES/4h-fe.git
+    dest: /opt/4HBYTES/fe
+    version: "{{ fe_branch }}"
+    accept_hostkey: yes
+  register: gitclone
+
+- name: Install npm softwares
+  npm:
+    state: latest
+    path: /opt/4HBYTES/fe
+  when: gitclone.changed
+
+
+- name: build 
+  shell: rm -rf ./dist ; /opt/4HBYTES/fe/node_modules/.bin/webpack --config config/webpack-production.js --progress --profile --colors --bail
+  args:
+    chdir: /opt/4HBYTES/fe
+  when: gitclone.changed

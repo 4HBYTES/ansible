@@ -1,0 +1,2 @@
+[4HBYTES]
+shindagha ansible_ssh_host=151.80.26.64      ansible_ssh_port=22 ansible_ssh_user=root

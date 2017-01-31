@@ -1,0 +1,16 @@
+[Unit]
+Description=PAYMENT
+After=syslog.target
+
+[Service]
+Type=simple
+ExecStart=/opt/4HBYTES/payment/env/bin/python manage.py runserver -p 8081
+WorkingDirectory=/opt/4HBYTES/payment/src
+User=root
+Group=root
+Restart=always
+Environment=SQLALCHEMY_DATABASE_URI="{{payment_db_uri}}"
+SyslogIdentifier=payment
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,7 @@
+---
+
+- name: payment-restart
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: payment

@@ -1,0 +1,16 @@
+[Unit]
+Description=CMS
+After=syslog.target
+
+[Service]
+Type=simple
+ExecStart=/opt/4HBYTES/cms/env/bin/python manage.py runserver -p 8080
+WorkingDirectory=/opt/4HBYTES/cms/cms
+User=root
+Group=root
+Restart=always
+Environment=DATABASE_PASSWORD="{{cms_db_password}}"
+SyslogIdentifier=cms
+
+[Install]
+WantedBy=multi-user.target

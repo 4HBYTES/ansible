@@ -1,0 +1,79 @@
+---
+
+- user:
+    name: payment
+    shell: /bin/bash
+
+- name: Install basic softwares
+  apt: name={{ item }}  state=latest update_cache=yes
+  with_items:
+    - binutils
+    - build-essential
+    - curl
+    - git
+    - git-core
+    - libbz2-dev
+    - libev-dev
+    - libffi-dev
+    - libgdbm-dev
+    - libjpeg8-dev
+    - libpcre3-dev
+    - libpq-dev
+    - libssl-dev
+    - libssl-dev
+    - libwebp-dev
+    - nginx
+    - python
+    - python-dev
+    - python-pip
+
+- name: Create directory
+  file: path=/opt/4HBYTES state=directory
+
+
+- name: Install virtualenv
+  pip: name=virtualenv
+  
+- name: Clone payment
+  git:
+    repo: https://github.com/4HBYTES/payment.git
+    dest: /opt/4HBYTES/payment
+    version: "{{ payment_branch }}"
+    accept_hostkey: yes
+  register: gitclone
+
+- name: Stop service and clean
+  shell: systemctl stop payment.service ; find . -name "*.pyc" -exec rm -rf {} \;
+  args:
+    chdir: /opt/4HBYTES/payment
+  notify: payment-restart
+  when: gitclone.changed
+
+- name: Create the virtualenv
+  pip: virtualenv_command=virtualenv virtualenv=/opt/4HBYTES/payment/env requirements=/opt/4HBYTES/payment/src/requirements.txt
+  notify: payment-restart
+  when: gitclone.changed
+    
+- name: Create the virtualenv
+  pip: virtualenv_command=virtualenv virtualenv=/opt/4HBYTES/payment/env requirements=/opt/4HBYTES/payment/src/requirements-extra.txt
+  notify: payment-restart
+  when: gitclone.changed
+    
+- name: Create the virtualenv
+  pip: virtualenv_command=virtualenv virtualenv=/opt/4HBYTES/payment/env requirements=/opt/4HBYTES/payment/src/tests/requirements.txt
+  notify: payment-restart
+  when: gitclone.changed
+
+- name: Create the virtualenv
+  pip: virtualenv_command=virtualenv virtualenv=/opt/4HBYTES/payment/env name=uwsgi
+  notify: payment-restart
+  when: gitclone.changed
+
+- name: systemd configuration payment
+  template: src=payment.service.j2 dest=/etc/systemd/system/payment.service
+
+- name: payment-restart
+  systemd:
+    enabled: yes
+    daemon_reload: yes
+    name: payment

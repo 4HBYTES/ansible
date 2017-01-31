@@ -1,0 +1,6 @@
+---
+fqdn: "4hbytes.wowi.io"
+hostname: "4hbytes"
+fe_branch: "master"
+payment_branch: "master"
+cms_branch: "master"

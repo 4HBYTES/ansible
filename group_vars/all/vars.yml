@@ -1,0 +1,19 @@
+---
+
+root:
+  name: "4HBYTES"
+
+
+sshusers:
+  loic:
+    state: "present"
+    sshkey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7VHd1ZhAQB3+ObNEkKqeOFo+Gn6cY9TXrhB52K5J8R7owGnCRgTRMSUdQmU4RAOXhVhhFZACHI29srKYzZGAj5mlK/TD+Ao3q0ODXwvFWXHFxmL4dhk8RajOHififCg7CUSsdMNPzSU8Egd5DkXtrMfjpAnfhZfZ/3iAUVrqG6TFm0LKTHgQMPYgbeyCK1BsxPUV18i3U3pqqKECm91L88PGce14t3n5zr9ltq8xB0WcFn/BL9JsStc0b1vHPXjYuSmg315hpbKNjQO+kyq+G5WioptuKsT8H5tlqVudDIcjwD3GhYF3pDq6TO/fX39opnpaNp65doB0IW5AOEHAj loic@Loics-MacBook-Pro.local"
+  pierre:
+    state: "present"
+    sshkey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDeo7owpKj0JVlnQY1bQRazYcSKkq22JCVrsdqpyLL33R1pxySBCF6JIjDMiSt7zC6UNpgz5FGstSPf+iCwfc0A3CcPA/HuPV6pidjEkM2LvWK16pzx7GQ+kPeVGkzlnn9O9NBnt1UL6dQYKAG4qfxnFKGKEAS2SFAsQt+v3lpv3cNrYw3ADgJn+TlqFopL49Q0cG4L3byqr5Wcdun/KHfzRv+lFBb8ZJ/8XPvzvYWsfCNkivogECBMzzrM0sosja/7ec5E1hwlW8JU01lnDZ6seFNR0siK6Mg+Y2h5TEHC4nJCYXyOKb7xK7JkpRrkF10dRl+Gp5vpLAbkojXpea61 pierre@Pierres-MacBook-Pro.local"    
+  boguslaw:
+    state: "present"
+    sshkey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDWGiT9n/p6zEheoa2cYsavDZyvrBbbevP3/F9RCWLcv9K03CY/8pdh0q0a+x5z5z8cnL9pd0f3KvB9bXr6xmRYE12+0gwus54hK/ymjhCE114UCQjnro4F8dLT6nqvnnAVKErV5aTVGUUz+5CyqYjSrahth3gAFHLbbFJuTOZSkhaHIpP4FHLqtcWRKL8jpHHfn0qLqwPlsGod7ZR37GfYA1AUCQTw/aV3V42RUeWzQPH30NwDFNnJSeP355dN250dCDGYdhxH8aVjjCBLiGVWWczRN+++dglWRLAxAr/b9xccZBMs3uwzybjM0uckpvnSwpj62Y1BX4tgtgJWtbHcNlctA7VZ9PruSfDf+zHP5VG/2H0DCrFk+lb6rleCm7SmgFZMp/8tmznucT1suLsGC0OFOoTBqyUbq5KNawfeUciU6SYUkyGi/xIrQBRnygbYoKERtYSSX/+LbEB094Kz6yl6mP+G04oSXy0460PnD2MDNXHEsK8eSmkofsxM3rsx5dvmP5g94p2bQScX03BKyXr2JYu3cPJRZABg6ANehJran9bIYPfMGwlEPGGgyGZsUM+ohyL1c6MVldwb9y9mbE5Cn8FErL6Y9GKVZ40U1fz+GyV8fSG5Rf30sx2chY0/EU5nQI8YaU6Bdo3TRbIQ2Hkp/fuiWv2E4YokBjF5wQ== skrzypkowiak@gmail.com"
+  yannis:
+    state: "present"
+    sshkey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPiNXbS4EH2w0RephTGoG/rtyeXpV/ThN/2f0hwC9dHZ6YsFQxQ5XaQnmK3WmqA61Z7/2KtDhsPAdnCjUZ5b9BoUhxolzBO3RXSfcRUXiecI71V5jtEOujxeNCJk2N/EaE0n3RaFrtvm/HIzP+uuWEQGvVVyInph3Kl3BgGN1ZcNfkabNZ4sUVflgbMHZ61TmrhquN+05/ImH2joJ0J7d1Q16XepvqGr2QJrU3L+vkrd0/f+S/MfM6N3CPNOlyCY7uDHtwQZUdyzEFJ9dl2tYCCNmq4BWLdF9MYmPYqaBTKdlG4OsC2FeUj9PckJ9ZKIJFsWDzhNBNqGVTGQkhsXEJ yannis@yannis-icflix"    
