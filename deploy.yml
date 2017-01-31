@@ -1,0 +1,12 @@
+---
+
+- name: All deployment
+  hosts:
+    - all
+  remote_user: root
+  roles:
+    - ubuntu16.04/common
+    - ubuntu16.04/fe
+    - ubuntu16.04/nginx
+    - ubuntu16.04/cms
+    - ubuntu16.04/payment

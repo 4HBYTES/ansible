@@ -1,0 +1,85 @@
+user www-data;
+worker_processes auto;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 300;
+    types_hash_max_size 2048;
+    client_max_body_size 10240m;
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    gzip on;
+    gzip_disable "msie6";
+    gzip_proxied any;
+    gzip_types text/plain application/json application/xml text/css application/javascript application/x-javascript text/javascript;
+
+    log_format le_json '{ "time": "$time_iso8601", '
+        '"remote_address": "$remote_addr", '
+        '"remote_user": "$remote_user", '
+        '"body_bytes_sent": $body_bytes_sent, '
+        '"request_time": $request_time, '
+        '"status": "$status", '
+        '"host": "$host", '
+        '"uri": "$uri", '
+        '"request": "$request", '
+        '"request_method": "$request_method", '
+        '"http_referrer": "$http_referer", '
+        '"http_user_agent": "$http_user_agent"}';
+        access_log /var/log/nginx/access.log le_json;
+        error_log /var/log/nginx/error.log;
+        upstream cms  {
+            server 127.0.0.1:8000;
+        }
+        upstream payment  {
+            server 127.0.0.1:8081;
+        }
+        
+        server {
+            server_name shindagha.wowi.io;
+            listen         80;
+            resolver 8.8.8.8 8.8.4.4 valid=300s;
+            resolver_timeout 5s;
+            root /opt/4HBYTES/fe/dist;
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+        }
+        server {
+            server_name shindagha-cms.wowi.io;
+            listen         80;
+            resolver 8.8.8.8 8.8.4.4 valid=300s;
+            resolver_timeout 5s;
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+            location / {
+                proxy_pass http://cms;
+                proxy_set_header        Host            shindagha-cms.wowi.io;
+                proxy_set_header        X-Real-IP       $remote_addr;
+                proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+            }
+        }
+        server {
+            server_name shindagha-payment.wowi.io;
+            listen         80;
+            resolver 8.8.8.8 8.8.4.4 valid=300s;
+            resolver_timeout 5s;
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+            location / {
+                proxy_pass http://payment;
+                proxy_set_header        Host            shindagha-payment.wowi.io;
+                proxy_set_header        X-Real-IP       $remote_addr;
+                proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+            }
+        }
+}

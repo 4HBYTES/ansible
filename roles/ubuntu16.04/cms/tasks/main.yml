@@ -40,6 +40,7 @@
     dest: /opt/4HBYTES/cms
     version: "{{ cms_branch }}"
     accept_hostkey: yes
+    force: yes
   register: gitclone
 
 - name: Stop service and clean
@@ -53,6 +54,9 @@
   pip: virtualenv_command=virtualenv virtualenv=/opt/4HBYTES/cms/env requirements=/opt/4HBYTES/cms/requirements.txt
   notify: cms-restart
   when: gitclone.changed
+
+- name: cms local_settings configuration
+  template: src=local_settings.py.j2 dest=/opt/4HBYTES/cms/cms/cms/local_settings.py
 
 - name: systemd configuration cms
   template: src=cms.service.j2 dest=/etc/systemd/system/cms.service
