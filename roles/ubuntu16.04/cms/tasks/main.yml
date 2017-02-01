@@ -66,14 +66,15 @@
 - name: systemd configuration cms
   template: src=cms.service.j2 dest=/etc/systemd/system/cms.service
 
-- name: Collectstatic
-  shell: /opt/4HBYTES/cms/env/bin/python manage.py collectstatic
-  args:
-    chdir: /opt/4HBYTES/cms/cms
+- django_manage:
+    command: collectstatic
+    app_path: "/opt/4HBYTES/cms/cms"
+    virtualenv: "/opt/4HBYTES/cms/env"
   when: gitclone.changed
 
 - name: cms-restart
   systemd:
     enabled: yes
     daemon_reload: yes
+    state: restarted
     name: cms
