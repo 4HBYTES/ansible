@@ -11,6 +11,15 @@ Group=root
 Restart=always
 Environment=SQLALCHEMY_DATABASE_URI="{{payment_db_uri}}"
 SyslogIdentifier=payment
+Environment=PAYPAL_MODE=sandbox
+Environment=PAYPAL_CLIENT_ID=ASsPRF5PWPAt2tth8sicGVtcQcee7aXsPsMzic7-whdbhO0LxO0eDVX-ijOg2_8FUe28FwP0lDVZcSyN
+Environment=PAYPAL_CLIENT_SECRET={{cms_paypal_client_secret}}
+Environment=PAYPAL_RETURN_URL=http://shindagha-payment.wowi.io/payment/paypal/progress
+Environment=PAYPAL_CANCEL_URL=http://shindagha.wowi.io/
+Environment=PAYPAL_SUCCESS_URL=http://shindagha.wowi.io/user/payment/success
+Environment=PAYPAL_FAILURE_URL=http://shindagha.wowi.io/user/payment/failure
+Environment=PAYPAL_TRANSACTION_DESCRIPTION='Paypal transaction'
+Environment=CMS_API=http://shindagha-cms.wowi.io/
 
 [Install]
 WantedBy=multi-user.target

@@ -12,6 +12,7 @@
     dest: /opt/4HBYTES/fe
     version: "{{ fe_branch }}"
     accept_hostkey: yes
+    force: yes
   register: gitclone
 
 - name: Install npm softwares
